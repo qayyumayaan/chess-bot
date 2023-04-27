@@ -100,5 +100,18 @@ board = Chessboard('board', config)
 
 updateStatus()
 
-$('#startBtn').on('click', board.start);
-$('#clearBtn').on('click', board.clear);
+$('#startBtn').on('click', function() {
+  board.clear();
+  game.reset();
+  board.position(game.fen());
+  board.start();
+  updateStatus();
+
+});
+
+$('#clearBtn').on('click', function() {
+  board.position(game.fen());
+  game.reset();
+  updateStatus();
+  board.clear();
+});
