@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chessboard.js</title>
+	<link rel="stylesheet" href="css/chessboard-1.0.0.min.css" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="js/chessboard-1.0.0.min.js"></script>
+    <script src="js/chess.js"></script>
+</head>
+<body>
+	<h1>Chessboard.js</h1>
+
+    <div id="board1" style="width: 500px"></div>
+
+	<p><button id="startBtn">Start Position</button></p>
+	<p><button id="clearBtn">Clear Board</button></p>
+	<script>
+		var board1 = Chessboard('board1', {
+			draggable: true,
+			position: 'start',
+			onDrop: function(source, target, piece, newPos, oldPos, orientation) {
+				console.log('Piece ' + piece + ' dropped on ' + target);
+			}
+		});
+
+		$('#startBtn').on('click', board1.start);
+		$('#clearBtn').on('click', board1.clear);
+	</script>
+
+
+</body>
+</html>
