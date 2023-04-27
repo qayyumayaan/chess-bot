@@ -1,5 +1,41 @@
 /*! chessboard.js v1.0.0 | (c) 2019 Chris Oakman | MIT License chessboardjs.com/license */
 
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+button {
+  background-color: #990000;
+  color: #FFFFFF;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 10px; 
+  /* padding: 8px 16px; */
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+title {
+  text-align: center;
+}
+
+h1 {
+  color: #990000;
+  font-size: 36px;
+}
+
+#game-over {
+  font-size: 24px;
+  font-weight: bold;
+  color: #990000;
+}
+
 .clearfix-7da63 {
   clear: both;
 }

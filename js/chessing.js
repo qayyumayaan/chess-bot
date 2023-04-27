@@ -17,6 +17,19 @@ function onDragStart (source, piece, position, orientation) {
   }
 }
 
+function makeRandomMove () {
+    var possibleMoves = game.moves()
+  
+    // game over
+    if (possibleMoves.length === 0) {
+        document.getElementById("game-over").innerHTML = "Game over!";
+        return
+    }
+    var randomIdx = Math.floor(Math.random() * possibleMoves.length)
+    game.move(possibleMoves[randomIdx])
+    board.position(game.fen())
+  }
+
 function onDrop (source, target) {
   // see if the move is legal
   var move = game.move({
@@ -28,6 +41,8 @@ function onDrop (source, target) {
   // illegal move
   if (move === null) return 'snapback'
 
+  // make move for black
+  window.setTimeout(makeRandomMove, 250)
   updateStatus()
 }
 
