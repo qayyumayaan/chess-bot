@@ -7,14 +7,108 @@ var $fen = $('#fen')
 var $pgn = $('#pgn')
 
 
-function makeMove () { // gamblebot
-  var possibleMoves = game.moves()
-  if (isGameOver(possibleMoves.length)) return
+// function makeMove () { // gamblebot
+//   var possibleMoves = game.moves()
+//   if (isGameOver(possibleMoves.length)) return
 
-  var randomIdx = Math.floor(Math.random() * possibleMoves.length)
-  game.move(possibleMoves[randomIdx])
-  board.position(game.fen())
+//   var randomIdx = Math.floor(Math.random() * possibleMoves.length)
+//   game.move(possibleMoves[randomIdx])
+//   board.position(game.fen())
+// }
+
+
+var depthLimit = 3;
+
+var depthSlider = document.getElementById("depth-slider");
+var depthValue = document.getElementById("depth-value");
+
+depthSlider.addEventListener("input", function() {
+  depthValue.innerHTML = this.value;
+  depthLimit = parseInt(this.value);
+  console.log(depthLimit)
+});
+
+function makeMove() {
+  var possibleMoves = game.moves();
+  if (isGameOver(possibleMoves.length)) return;
+
+  var bestMove = null;
+  var bestScore = -Infinity;
+  for (var i = 0; i < possibleMoves.length; i++) {
+    game.move(possibleMoves[i]);
+    var score = minimax(depthLimit - 1, -Infinity, Infinity, false);
+    game.undo();
+    if (score > bestScore) {
+      bestScore = score;
+      bestMove = possibleMoves[i];
+    }
+  }
+  game.move(bestMove);
+  board.position(game.fen());
 }
+
+function minimax(depth, alpha, beta, isMaximizingPlayer) {
+  if (depth == 0 || isGameOver()) {
+    return evaluateBoard();
+  }
+
+  var possibleMoves = game.moves();
+  if (isMaximizingPlayer) {
+    var bestScore = -Infinity;
+    for (var i = 0; i < possibleMoves.length; i++) {
+      game.move(possibleMoves[i]);
+      var score = minimax(depth - 1, alpha, beta, false);
+      game.undo();
+      bestScore = Math.max(bestScore, score);
+      alpha = Math.max(alpha, bestScore);
+      if (beta <= alpha) {
+        break;
+      }
+    }
+    return bestScore;
+  } else {
+    var bestScore = Infinity;
+    for (var i = 0; i < possibleMoves.length; i++) {
+      game.move(possibleMoves[i]);
+      var score = minimax(depth - 1, alpha, beta, true);
+      game.undo();
+      bestScore = Math.min(bestScore, score);
+      beta = Math.min(beta, bestScore);
+      if (beta <= alpha) {
+        break;
+      }
+    }
+    return bestScore;
+  }
+}
+
+
+
+
+
+function evaluateBoard() {
+  const pieceValues = {
+    p: -1,
+    n: -3,
+    b: -3,
+    r: -5,
+    q: -9,
+    P: 1,
+    N: 3,
+    B: 3,
+    R: 5,
+    Q: 9,
+  };
+  const fen = game.fen();
+  return [...fen].reduce((sum, piece) => sum + (pieceValues[piece] || 0), 0);
+}
+
+
+
+
+
+
+
 
 
 
@@ -31,7 +125,7 @@ function onDragStart (source, piece, position, orientation) {
 }
 
 function chooseAlgorithm () {
-  document.getElementById("active-algorithm").innerHTML = "Active bot: gamblebot";
+  document.getElementById("active-algorithm").innerHTML = "Active bot: minimax";
 }
 
 function isGameOver (possibleMoveslength) {
