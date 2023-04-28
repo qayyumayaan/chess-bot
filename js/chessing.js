@@ -6,6 +6,19 @@ var $status = $('#status')
 var $fen = $('#fen')
 var $pgn = $('#pgn')
 
+
+function makeMove () { // gamblebot
+  var possibleMoves = game.moves()
+  if (isGameOver(possibleMoves.length)) return
+
+  var randomIdx = Math.floor(Math.random() * possibleMoves.length)
+  game.move(possibleMoves[randomIdx])
+  board.position(game.fen())
+}
+
+
+
+
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false
@@ -17,18 +30,19 @@ function onDragStart (source, piece, position, orientation) {
   }
 }
 
-function makeRandomMove () {
-    var possibleMoves = game.moves()
-  
-    // game over
-    if (possibleMoves.length === 0) {
-        document.getElementById("game-over").innerHTML = "Game over!";
-        return
+function chooseAlgorithm () {
+  document.getElementById("active-algorithm").innerHTML = "Active bot: gamblebot";
+}
+
+function isGameOver (possibleMoveslength) {
+      // game over
+    if (possibleMoveslength === 0) {
+      document.getElementById("game-over").innerHTML = "Game over!";
+      return true
     }
-    var randomIdx = Math.floor(Math.random() * possibleMoves.length)
-    game.move(possibleMoves[randomIdx])
-    board.position(game.fen())
-  }
+    return false
+}
+
 
 function onDrop (source, target) {
   // see if the move is legal
@@ -42,7 +56,7 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   // make move for black
-  window.setTimeout(makeRandomMove, 250)
+  window.setTimeout(makeMove, 250)
   updateStatus()
 }
 
@@ -98,6 +112,7 @@ var config = {
 }
 board = Chessboard('board', config)
 
+chooseAlgorithm()
 updateStatus()
 
 $('#startBtn').on('click', function() {
