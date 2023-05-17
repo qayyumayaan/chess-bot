@@ -27,48 +27,46 @@
 	<div class="container">
 		<div class="row justify-content-center">
 		  <div class="col-lg-6">
-	<h1>Ayaan's Chessboard</h1>
+			<h1>Ayaan's Chessboard</h1>
 
-    <div id="board" style="width: 500px"></div>
-	<div class="button-container">
-		<button id="startBtn">Start Position</button>
-		<button id="clearBtn">Clear Board</button>
-	</div>
-	<p id="game-over"></p>
-	<p id="active-algorithm"></p>
-
-
-	<label for="depth-slider">Depth Limit:</label>
-	<input type="range" id="depth-slider" name="depth-slider" min="1" max="10" value="3" class="form-range custom-slider">
-	<span id="depth-value">3</span>
-
-	<script>
-		var depthSlider = document.getElementById("depth-slider");
-		var depthValue = document.getElementById("depth-value");
-
-		depthSlider.addEventListener("input", function() {
-			depthValue.innerHTML = this.value;
-			depthLimit = parseInt(this.value);
-		});
-	</script>
-
-	<p style="font-size: smaller;">The depth limit is a way to tell the computer how many moves it should look ahead when it's playing chess. The computer looks that many steps into the future to decide what the best move is.</p>
-
-	<p style="font-size: smaller;">This chess algorithm employs the minimax algorithm with alpha-beta pruning to explore and evaluate the game tree, prioritizing moves that involve captures, checks, or promotions. It recursively searches for the best move at a given depth while pruning branches that don't improve the evaluation, ultimately selecting the optimal move for the current player.</p>
-
-
-	<script src="js/chessing.js"></script>
-
-
-	<p>This is a personal project with the goal of testing and developing different chess solving algorithms.</p>
-	<p>Check out my 
-		<a href="https://qayyumayaan.github.io/sudoku-solver/">Sudoku Solver.</a></p>
-	<p>See my other works at my 
-		<a href="https://github.com/qayyumayaan">Github.</a></p>
-
+			<div class="d-flex justify-content-center">
+				<div id="board" style="width: 500px"></div>
 			</div>
+
+			<div class="button-container">
+				<button id="startBtn">Start Position</button>
+				<button id="clearBtn">Clear Board</button>
+			</div>
+			<p id="game-over"></p>
+			<p id="active-algorithm"></p>
+
+			<label for="depth-slider">Depth Limit:</label>
+			<input type="range" id="depth-slider" name="depth-slider" min="1" max="10" value="3" class="form-range custom-slider">
+			<span id="depth-value">3</span>
+
+			<script>
+				var depthSlider = document.getElementById("depth-slider");
+				var depthValue = document.getElementById("depth-value");
+
+				depthSlider.addEventListener("input", function() {
+					depthValue.innerHTML = this.value;
+					depthLimit = parseInt(this.value);
+				});
+			</script>
+
+			<p style="font-size: smaller;">The depth limit is a way to tell the computer how many moves it should look ahead when it's playing chess. The computer looks that many steps into the future to decide what the best move is.</p>
+
+			<p style="font-size: smaller;">This chess algorithm employs the minimax algorithm with alpha-beta pruning to explore and evaluate the game tree, prioritizing moves that involve captures, checks, or promotions. It recursively searches for the best move at a given depth while pruning branches that don't improve the evaluation, ultimately selecting the optimal move for the current player.</p>
+
+			<script src="js/chessing.js"></script>
+
+			<p>This is a personal project with the goal of testing and developing different chess solving algorithms.</p>
+			<p>Check out my <a href="https://qayyumayaan.github.io/sudoku-solver/">Sudoku Solver.</a> See my other works at my <a href="https://qayyumayaan.github.io/">website.</a></p>
+
 		</div>
 	</div>
+</div>
+
 
 
 </body>
